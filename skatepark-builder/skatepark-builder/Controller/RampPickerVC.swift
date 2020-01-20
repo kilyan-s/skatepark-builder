@@ -12,6 +12,7 @@ import SceneKit
 class RampPickerVC: UIViewController {
     var sceneView: SCNView!
     var size: CGSize!
+    weak var rampPlacerVC: RampPlacerVC!
     
     init(size: CGSize) {
         super.init(nibName: nil, bundle: nil)
@@ -31,6 +32,11 @@ class RampPickerVC: UIViewController {
         
         preferredContentSize = size
         
+        //Add tap gesture recognizer to handle 3D model selection
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(tapHandler(_:)))
+        tapGesture.numberOfTapsRequired = 1
+        sceneView.addGestureRecognizer(tapGesture)
+        
         //Create the scene to add all 3D models
         let scene = SCNScene(named: "art.scnassets/ramps.scn")!
         sceneView.scene = scene
@@ -40,36 +46,37 @@ class RampPickerVC: UIViewController {
         camera.usesOrthographicProjection = true
         scene.rootNode.camera = camera
         
-        let rotate = SCNAction.repeatForever(SCNAction.rotate(by: CGFloat(0.05 * Double.pi), around: SCNVector3(0, 1, 0), duration: 0.1))
         
         //Create pipe 3D object
-        let pipeScene = SCNScene(named: "art.scnassets/pipe.dae")
-        //Get the pipe object in pipeScene file
-        let pipeNode = pipeScene?.rootNode.childNode(withName: "pipe", recursively: true)
-        //Change the scale and position to fit in popover VC
-        pipeNode?.scale = SCNVector3Make(0.0020, 0.0020, 0.0020)
-        pipeNode?.position = SCNVector3Make(0.1, 0.7, 0)
-        //Start rotation of the object
-        pipeNode?.runAction(rotate)
+        let pipeNode = Ramp.getPipe()
+        Ramp.startRotation(node: pipeNode)
         
         //Create pyramid 3D object
-        let pyramidScene = SCNScene(named: "art.scnassets/pyramid.dae")
-        let pyramidNode = pyramidScene?.rootNode.childNode(withName: "pyramid", recursively: true)
-        pyramidNode?.scale = SCNVector3Make(0.0050, 0.0050, 0.0050)
-        pyramidNode?.position = SCNVector3Make(0.1, -0.2, 0)
-        pyramidNode?.runAction(rotate)
+        let pyramidNode = Ramp.getPyramid()
+        Ramp.startRotation(node: pyramidNode)
         
         //Create quarter 3D Object
-        let quarterScene = SCNScene(named: "art.scnassets/quarter.dae")
-        let quarterNode = quarterScene?.rootNode.childNode(withName: "quarter", recursively: true)
-        quarterNode?.scale = SCNVector3Make(0.0045, 0.0045, 0.0045)
-        quarterNode?.position = SCNVector3Make(0.1, -1.5, 0)
-        quarterNode?.runAction(rotate)
+        let quarterNode = Ramp.getQuarter()
+        Ramp.startRotation(node: quarterNode)
         
         //Add objects to the main scene
-        scene.rootNode.addChildNode(pipeNode!)
-        scene.rootNode.addChildNode(pyramidNode!)
-        scene.rootNode.addChildNode(quarterNode!)
+        scene.rootNode.addChildNode(pipeNode)
+        scene.rootNode.addChildNode(pyramidNode)
+        scene.rootNode.addChildNode(quarterNode)
+        
+    }
+    
+    @objc func tapHandler(_ gesture: UIGestureRecognizer) {
+        //Save point coordinates where user has click on sceneView
+        let p = gesture.location(in: sceneView)
+        //Check if there is an object at these coordinates
+        let hitResults = sceneView.hitTest(p, options: [:])
+        
+        if hitResults.count > 0 {
+            let node = hitResults[0].node
+            
+            rampPlacerVC.rampWasSelected(rampName: node.name!)
+        }
         
     }
     
