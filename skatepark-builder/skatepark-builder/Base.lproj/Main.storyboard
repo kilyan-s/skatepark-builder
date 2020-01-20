@@ -18,9 +18,22 @@
                             <arscnView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="OeA-sJ-TBI">
                                 <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                             </arscnView>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="df1-wM-dUt">
+                                <rect key="frame" x="287" y="791" width="107" height="71"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="71" id="7gA-83-nGd"/>
+                                    <constraint firstAttribute="width" constant="107" id="Zte-bo-wV3"/>
+                                </constraints>
+                                <state key="normal" image="rampIcon"/>
+                                <connections>
+                                    <action selector="rampBtnWasPressed:" destination="BV1-FR-VrT" eventType="touchUpInside" id="5f3-S6-inc"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <constraints>
+                            <constraint firstItem="fQZ-KI-GVf" firstAttribute="trailing" secondItem="df1-wM-dUt" secondAttribute="trailing" constant="20" id="2Cr-ao-50A"/>
+                            <constraint firstItem="df1-wM-dUt" firstAttribute="bottom" secondItem="fQZ-KI-GVf" secondAttribute="bottom" id="BC6-uc-iaQ"/>
                             <constraint firstItem="OeA-sJ-TBI" firstAttribute="leading" secondItem="fQZ-KI-GVf" secondAttribute="leading" id="DU3-D3-Oj4"/>
                             <constraint firstAttribute="bottom" secondItem="OeA-sJ-TBI" secondAttribute="bottom" id="FVd-5l-qm6"/>
                             <constraint firstItem="fQZ-KI-GVf" firstAttribute="trailing" secondItem="OeA-sJ-TBI" secondAttribute="trailing" id="eV7-Sc-74i"/>
@@ -37,4 +50,7 @@
             <point key="canvasLocation" x="139" y="128"/>
         </scene>
     </scenes>
+    <resources>
+        <image name="rampIcon" width="107" height="71"/>
+    </resources>
 </document>
