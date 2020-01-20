@@ -13,8 +13,13 @@ import ARKit
 class RampPlacerVC: UIViewController, ARSCNViewDelegate, UIPopoverPresentationControllerDelegate {
 
     @IBOutlet var sceneView: ARSCNView!
+    @IBOutlet weak var controls: UIStackView!
+    @IBOutlet weak var rotateBtn: UIButton!
+    @IBOutlet weak var moveUpBtn: UIButton!
+    @IBOutlet weak var moveDownBtn: UIButton!
     
-    var selectedRamp: String?
+    var selectedRampName: String?
+    var selectedRamp: SCNNode?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -30,6 +35,17 @@ class RampPlacerVC: UIViewController, ARSCNViewDelegate, UIPopoverPresentationCo
         sceneView.autoenablesDefaultLighting = true
         // Set the scene to the view
         sceneView.scene = scene
+        
+        let gesture1 = UILongPressGestureRecognizer(target: self, action: #selector(onLongPress(_:)))
+        let gesture2 = UILongPressGestureRecognizer(target: self, action: #selector(onLongPress(_:)))
+        let gesture3 = UILongPressGestureRecognizer(target: self, action: #selector(onLongPress(_:)))
+        gesture1.minimumPressDuration = 0.1
+        gesture2.minimumPressDuration = 0.1
+        gesture3.minimumPressDuration = 0.1
+        
+        rotateBtn.addGestureRecognizer(gesture1)
+        moveUpBtn.addGestureRecognizer(gesture2)
+        moveDownBtn.addGestureRecognizer(gesture3)
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -91,17 +107,35 @@ class RampPlacerVC: UIViewController, ARSCNViewDelegate, UIPopoverPresentationCo
     }
     
     func rampWasSelected(rampName: String) {
-        selectedRamp = rampName
+        selectedRampName = rampName
     }
     
     func placeRamp(position: SCNVector3) {
-        guard let selectedRampName = selectedRamp else { return }
+        guard let selectedRampName = selectedRampName else { return }
         let ramp = Ramp.getRamp(forName: selectedRampName)
+        selectedRamp = ramp
         ramp.position = position
         ramp.scale = SCNVector3Make(0.01, 0.01, 0.01)
         sceneView.scene.rootNode.addChildNode(ramp)
-        
-        
+        controls.isHidden = false
+    }
+    
+     @objc func onLongPress(_ gesture: UILongPressGestureRecognizer) {
+        guard let ramp = selectedRamp else { return }
+        if gesture.state == .ended {
+            ramp.removeAllActions()
+        } else if gesture.state == .began {
+            if gesture.view === rotateBtn {
+                let rotate = SCNAction.repeatForever(SCNAction.rotateBy(x: 0, y: CGFloat(0.08 * Double.pi), z: 0, duration: 0.1))
+                ramp.runAction(rotate)
+            } else if gesture.view === moveUpBtn {
+                let moveUp = SCNAction.repeatForever(SCNAction.moveBy(x: 0, y: 0.08, z: 0, duration: 0.1))
+                ramp.runAction(moveUp)
+            } else if gesture.view === moveDownBtn {
+                let moveDown = SCNAction.repeatForever(SCNAction.moveBy(x: 0, y: -0.08, z: 0, duration: 0.1))
+                ramp.runAction(moveDown)
+            }
+        }
     }
     
     @IBAction func rampBtnWasPressed(_ sender: UIButton) {
@@ -116,6 +150,11 @@ class RampPlacerVC: UIViewController, ARSCNViewDelegate, UIPopoverPresentationCo
         rampPickerVC.popoverPresentationController?.sourceRect = sender.bounds
     }
     
+    @IBAction func removeBtnWasPressed(_ sender: Any) {
+        guard let ramp = selectedRamp else { return }
+        ramp.removeFromParentNode()
+        selectedRamp = nil
+    }
     
     
 }
