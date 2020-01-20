@@ -19,7 +19,7 @@
                                 <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                             </arscnView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="df1-wM-dUt">
-                                <rect key="frame" x="287" y="791" width="107" height="71"/>
+                                <rect key="frame" x="287" y="761" width="107" height="71"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="71" id="7gA-83-nGd"/>
                                     <constraint firstAttribute="width" constant="107" id="Zte-bo-wV3"/>
@@ -30,7 +30,7 @@
                                 </connections>
                             </button>
                             <stackView hidden="YES" opaque="NO" contentMode="scaleToFill" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="H6E-as-N4V">
-                                <rect key="frame" x="20" y="832" width="190" height="40"/>
+                                <rect key="frame" x="20" y="802" width="190" height="40"/>
                                 <subviews>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="gQ0-9e-fQQ">
                                         <rect key="frame" x="0.0" y="0.0" width="40" height="40"/>
@@ -73,12 +73,12 @@
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <constraints>
                             <constraint firstItem="fQZ-KI-GVf" firstAttribute="trailing" secondItem="df1-wM-dUt" secondAttribute="trailing" constant="20" id="2Cr-ao-50A"/>
-                            <constraint firstItem="df1-wM-dUt" firstAttribute="bottom" secondItem="fQZ-KI-GVf" secondAttribute="bottom" id="BC6-uc-iaQ"/>
+                            <constraint firstItem="df1-wM-dUt" firstAttribute="bottom" secondItem="fQZ-KI-GVf" secondAttribute="bottom" constant="-30" id="BC6-uc-iaQ"/>
                             <constraint firstItem="OeA-sJ-TBI" firstAttribute="leading" secondItem="fQZ-KI-GVf" secondAttribute="leading" id="DU3-D3-Oj4"/>
                             <constraint firstAttribute="bottom" secondItem="OeA-sJ-TBI" secondAttribute="bottom" id="FVd-5l-qm6"/>
                             <constraint firstItem="fQZ-KI-GVf" firstAttribute="trailing" secondItem="OeA-sJ-TBI" secondAttribute="trailing" id="eV7-Sc-74i"/>
                             <constraint firstItem="H6E-as-N4V" firstAttribute="leading" secondItem="fQZ-KI-GVf" secondAttribute="leading" constant="20" id="fhX-hS-QqT"/>
-                            <constraint firstItem="fQZ-KI-GVf" firstAttribute="bottom" secondItem="H6E-as-N4V" secondAttribute="bottom" constant="-10" id="hlF-FN-aYR"/>
+                            <constraint firstItem="fQZ-KI-GVf" firstAttribute="bottom" secondItem="H6E-as-N4V" secondAttribute="bottom" constant="20" id="hlF-FN-aYR"/>
                             <constraint firstItem="OeA-sJ-TBI" firstAttribute="top" secondItem="U0K-SW-4ec" secondAttribute="top" id="sej-6S-HFT"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="fQZ-KI-GVf"/>

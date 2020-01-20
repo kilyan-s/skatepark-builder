@@ -125,16 +125,19 @@ class RampPlacerVC: UIViewController, ARSCNViewDelegate, UIPopoverPresentationCo
         if gesture.state == .ended {
             ramp.removeAllActions()
         } else if gesture.state == .began {
-            if gesture.view === rotateBtn {
-                let rotate = SCNAction.repeatForever(SCNAction.rotateBy(x: 0, y: CGFloat(0.08 * Double.pi), z: 0, duration: 0.1))
-                ramp.runAction(rotate)
-            } else if gesture.view === moveUpBtn {
-                let moveUp = SCNAction.repeatForever(SCNAction.moveBy(x: 0, y: 0.08, z: 0, duration: 0.1))
-                ramp.runAction(moveUp)
-            } else if gesture.view === moveDownBtn {
-                let moveDown = SCNAction.repeatForever(SCNAction.moveBy(x: 0, y: -0.08, z: 0, duration: 0.1))
-                ramp.runAction(moveDown)
+            var action: SCNAction
+            
+            switch gesture.view {
+                case rotateBtn:
+                    action = SCNAction.repeatForever(SCNAction.rotateBy(x: 0, y: CGFloat(0.08 * Double.pi), z: 0, duration: 0.1))
+                case moveUpBtn:
+                    action = SCNAction.repeatForever(SCNAction.moveBy(x: 0, y: 0.08, z: 0, duration: 0.1))
+                case moveDownBtn:
+                    action = SCNAction.repeatForever(SCNAction.moveBy(x: 0, y: -0.08, z: 0, duration: 0.1))
+                default:
+                    action = SCNAction.repeatForever(SCNAction.rotateBy(x: 0, y: CGFloat(0.08 * Double.pi), z: 0, duration: 0.1))
             }
+            ramp.runAction(action)
         }
     }
     

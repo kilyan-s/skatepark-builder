@@ -78,7 +78,5 @@ class RampPickerVC: UIViewController {
             rampPlacerVC.rampWasSelected(rampName: node.name!)
             self.dismiss(animated: true, completion: nil)
         }
-        
     }
-    
 }
